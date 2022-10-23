@@ -5,33 +5,8 @@ public class Visitante {
     private String cidadeResidencia;
     private String sexo;
     private String profissao;
-    private String nascimento;
-    private int quantHomens = 0;
-    private int quantMulheres = 0;
+    private int nascimento;
     
-    public Visitante(){
-        
-    }
-
-    
-    public void Visitante(String fone, String cidadeResidencia, String sexo, String profissao, String nascimento) {
-        this.nome = "Matheus";
-        this.fone = "4822223333";
-        this.cidadeResidencia = "Criciuma";
-        this.sexo = "M";
-        this.profissao = "Marceneiro";
-        this.nascimento = "1970";
-    }
-    
-
-    public Visitante(String nome, String fone, String cidadeResidencia, String sexo, String profissao, String nascimento) {
-        this.nome = nome;
-        this.fone = fone;
-        this.cidadeResidencia = cidadeResidencia;
-        this.sexo = sexo;
-        this.profissao = profissao;
-        this.nascimento = nascimento;
-    }
         
     public String getNome() {
         return nome;
@@ -53,7 +28,7 @@ public class Visitante {
         return profissao;
     }
 
-    public String getNascimento() {
+    public int getNascimento() {
         return nascimento;
     }
 
@@ -77,36 +52,10 @@ public class Visitante {
         this.profissao = profissao;
     }
 
-    public void setNascimento(String nascimento) {
+    public void setNascimento(int nascimento) {
         this.nascimento = nascimento;
     }
-
-    @Override
-    public String toString() {
-        return "Nome:" + nome + "\nFone:" + fone + "\nCidadeResidencia:" + cidadeResidencia + "\nSexo:" + sexo + "\nProfissao:" + profissao + "\nNascimento:" + nascimento;
-    }
     
-    public void total(){
-        
-    }
-    
-    public int contaHomens(){
-        if ("M".equals(sexo)){
-            this.quantHomens = quantHomens+1;
-        } else if ("F".equals(sexo)){
-            this.quantHomens = quantHomens+0;
-        }
-        return quantHomens;
-        
-        
-    }
-    
-    public int contaMulher(){
-        if ("F".equals(sexo)){
-            this.quantMulheres = quantMulheres+1;       
-    }
-        return quantMulheres;   
-        }
 }
 
 
@@ -116,105 +65,49 @@ public class Visitante {
 
 
 
-public class executaVisitantes {
-    public static void main(String[] args) { 
+public class festa {
+    public static void main(String[] args) {
+        ArrayList<Visitante> Visitantes = new ArrayList<>();
         
-        //Scanner ler = new Scanner (System.in);
-        String nome, fone, cidadeResidencia, sexo, profissao, nascimento;
+        int options, isRunning = 1;
         
-        /*System.out.println("Informe o nome");
-        nome = ler.next();
+        ArrayList<String> cidades = new ArrayList<String>();
+        int quantHomens = 0, quantMulheres = 0, quantMenores = 0;
         
-        System.out.println("Informe o telefone");
-        fone = ler.next();
-        
-        System.out.println("Informe a cidade de residencia");
-        cidadeResidencia = ler.next();
-        
-        System.out.println("Informe o sexo");
-        sexo = ler.next();
-        
-        System.out.println("Informe a profissao");
-        profissao = ler.next();
-        
-        System.out.println("Informe o nascimento");
-        nascimento = ler.next();*/
-        
-        nome = JOptionPane.showInputDialog(null, "Informe o nome:");
-        fone = JOptionPane.showInputDialog(null, "Informe o telefone:");
-        cidadeResidencia = JOptionPane.showInputDialog(null, "Informe a cidade de residencia:");
-        sexo = JOptionPane.showInputDialog(null, "Informe o sexo:");
-        profissao = JOptionPane.showInputDialog(null, "Informe a profissao:");
-        nascimento = JOptionPane.showInputDialog(null, "Informe o nascimento:");
-        
-        
-            Visitante v1 = new Visitante();
-            v1.setNome(nome);
-            v1.setFone(fone);
-            v1.setCidadeResidencia(cidadeResidencia);
-            v1.setSexo(sexo);
-            v1.setProfissao(profissao);
-            v1.setNascimento(nascimento);
+        while(isRunning == 1) {
+            options = Integer.parseInt(JOptionPane.showInputDialog("1) Novo cadastro \n2) Mostrar resultado \n3) Fechar"));
             
-        nome = JOptionPane.showInputDialog(null, "Informe o nome:");
-        fone = JOptionPane.showInputDialog(null, "Informe o telefone:");
-        cidadeResidencia = JOptionPane.showInputDialog(null, "Informe a cidade de residencia:");
-        sexo = JOptionPane.showInputDialog(null, "Informe o sexo:");
-        profissao = JOptionPane.showInputDialog(null, "Informe a profissao:");
-        nascimento = JOptionPane.showInputDialog(null, "Informe o nascimento:");
+            if (options == 1) {
+                Visitante v = new Visitante();
+                
+                v.setNome(JOptionPane.showInputDialog("Informe o nome:"));
+                v.setCidadeResidencia(JOptionPane.showInputDialog("Informe a cidade:"));
+                v.setSexo(JOptionPane.showInputDialog("Informe o sexo (F ou M):"));
+                v.setProfissao(JOptionPane.showInputDialog("Informe a profissão"));
+                v.setFone (JOptionPane.showInputDialog("Telefone:"));
+                v.setNascimento(Integer.parseInt(JOptionPane.showInputDialog("Ano de nascimento (AAAA):")));
+                
+                if (v.getNascimento() > 2004 ) {
+                    quantMenores++;
+                }
+                
+                if (v.getSexo().equals("M")) {
+                    quantHomens++;
+                } else if (v.getSexo().equals("F")) {
+                    quantMulheres++;
+                }
+                
+                if (!cidades.contains(v.getCidadeResidencia())) {
+                    cidades.add(v.getCidadeResidencia());
+                }
+                
+                Visitantes.add(v);
+            } else if (options == 2) {
+                JOptionPane.showMessageDialog(null, "INFO\n\n Total: "+ Visitantes.size() + "\n Homens: " + quantHomens + " - " + (quantHomens * 100 / Visitantes.size()) + "%" + "\n Mulheres: " + quantMulheres + " - " + (quantMulheres * 100 / Visitantes.size()) + "%" + "\n Menores de Idade: " + quantMenores + "\n Cidades: " + cidades.size());
+            } else {
+                isRunning = 0;
+            }
             
-            Visitante v2 = new Visitante();
-            v2.setNome(nome);
-            v2.setFone(fone);
-            v2.setCidadeResidencia(cidadeResidencia);
-            v2.setSexo(sexo);
-            v2.setProfissao(profissao);
-            v2.setNascimento(nascimento);
-            
-        nome = JOptionPane.showInputDialog(null, "Informe o nome:");
-        fone = JOptionPane.showInputDialog(null, "Informe o telefone:");
-        cidadeResidencia = JOptionPane.showInputDialog(null, "Informe a cidade de residencia:");
-        sexo = JOptionPane.showInputDialog(null, "Informe o sexo:");
-        profissao = JOptionPane.showInputDialog(null, "Informe a profissao:");
-        nascimento = JOptionPane.showInputDialog(null, "Informe o nascimento:");
-            
-            Visitante v3 = new Visitante();
-            v3.setNome(nome);
-            v3.setFone(fone);
-            v3.setCidadeResidencia(cidadeResidencia);
-            v3.setSexo(sexo);
-            v3.setProfissao(profissao);
-            v3.setNascimento(nascimento);
-            
-        nome = JOptionPane.showInputDialog(null, "Informe o nome:");
-        fone = JOptionPane.showInputDialog(null, "Informe o telefone:");
-        cidadeResidencia = JOptionPane.showInputDialog(null, "Informe a cidade de residencia:");
-        sexo = JOptionPane.showInputDialog(null, "Informe o sexo:");
-        profissao = JOptionPane.showInputDialog(null, "Informe a profissao:");
-        nascimento = JOptionPane.showInputDialog(null, "Informe o nascimento:");
-            
-            Visitante v4 = new Visitante(nome,fone,cidadeResidencia, sexo, profissao, nascimento);
-            v4.setNome(nome);
-            v4.setFone(fone);
-            v4.setCidadeResidencia(cidadeResidencia);
-            v4.setSexo(sexo);
-            v4.setProfissao(profissao);
-            v4.setNascimento(nascimento);
-            
-            
-            
-        
-            
-            System.out.println(v1.toString());
-            System.out.println(v2.toString());
-            System.out.println(v3.toString());
-            System.out.println(v4.toString());
-            
-            System.out.println("Quantidade de homens:" + v1.contaHomens());
-            System.out.println("Quantidade de mulheres:" + v1.contaMulher());
         }
-                    
-         
-                
-                
     }
+}
